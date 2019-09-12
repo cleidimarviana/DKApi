@@ -1,50 +1,128 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { Button,Container,Row,Navbar,NavDropdown, FormControl, Form, Nav } from 'react-bootstrap';
+import { Button, Container, Row, Navbar, NavDropdown, FormControl, Form, Nav, Badge, Tabs, Tab, Table } from 'react-bootstrap';
 import { Alert } from 'react-bootstrap';
+import $ from "jquery";
+import JSONTree from 'react-json-tree'
+// If you're using Immutable.js: `npm i --save immutable`
+import { Map } from 'immutable'
 
 class App extends Component {
+
+
   render() {
+
+    const theme = {
+      scheme: 'monokai',
+      author: 'Cleidimar Viana',
+      base00: '#272822', /* background */
+      base01: '#383830',
+      base02: '#49483e',
+      base03: '#75715e',
+      base04: '#a59f85',
+      base05: '#f8f8f2',
+      base06: '#f5f4f1',
+      base07: '#f9f8f5',
+      base08: '#f92672',
+      base09: '#fd971f',
+      base0A: '#f4bf75',
+      base0B: '#a6e22e',
+      base0C: '#a1efe4',
+      base0D: '#66d9ef',
+      base0E: '#ae81ff',
+      base0F: '#cc6633'
+    };
+
+    var data = {
+      "nome" : "Ednilsonx",
+      "mensagem" : "Alo brasil",
+      "telefone" : "5511948700140",
+      "voucher": "20181DVFCRGM00009801"
+    };
+    var headers = [
+      {
+        "type": "Content-Type",
+        "value": "application/json"
+      }, {
+        "type": "Accept",
+        "value": "application/json"
+      }
+    ];
+
+    const listItems = headers.map((item) =>
+      <li>{item.type + " : " + item.value}</li>
+    );
+
+   
     return (
       <div className="App">
-        <header className="App-header">
+        <div class="d-flex" id="wrapper">
 
-        <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="#home">MUSSUM</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="mr-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#link">Link</Nav.Link>
-            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-            </NavDropdown>
-          </Nav>
-          <Form inline>
-            <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-            <Button variant="outline-success">Search</Button>
-          </Form>
-        </Navbar.Collapse>
-      </Navbar>
+          <div class="bg-light border-right" id="sidebar-wrapper">
+            <div class="sidebar-heading">DKApi</div>
+            <div class="list-group list-group-flush">
+              <a href="#" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+              <a href="#" class="list-group-item list-group-item-action bg-light">Shortcuts</a>
+              <a href="#" class="list-group-item list-group-item-action bg-light">Overview</a>
+              <a href="#" class="list-group-item list-group-item-action bg-light">Events</a>
+              <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
+              <a href="#" class="list-group-item list-group-item-action bg-light">Status</a>
+            </div>
+          </div>
+          <div id="page-content-wrapper">
+            <div class="container-fluid">
+              <h4>SMS</h4>
+              <h6>Envio de SMS usando Api do Zenvia</h6>
+              <h5>Parâmetros</h5>
+              <Table striped bordered size="sm">
+                <thead>
+                  <tr>
+                    <th>Campo</th>
+                    <th>Tipo</th>
+                  </tr>
+                </thead>
+                <tbody>
+                 
+                </tbody>
+              </Table>
+              <h5><Badge variant="primary">POST</Badge> <span className="url-api"> https://apidev.dkapi.com</span>/sms</h5>
 
-        <Container>
-        <Row>
-            <Alert dismissible variant="danger">
-              <Alert.Heading>Birits</Alert.Heading>
-              <p>
-              Mussum Ipsum, cacilds vidis litro abertis. Em pé sem cair, deitado sem dormir, sentado sem cochilar e fazendo pose. Aenean aliquam molestie leo, vitae iaculis nisl. Delegadis gente finis, bibendum egestas augue arcu ut est. Interagi no mé, cursus quis, vehicula ac nisi.
+              <h6>HEADERS</h6>
+              <div className="doc-headers">{listItems}</div>
+              <br/>
+              <h6>BODY</h6>
+              <pre className="doc-request">
+                {JSON.stringify(data, null, 2)}
+              </pre>
 
-Sapien in monti palavris qui num significa nadis i pareci latim.  Posuere libero varius. Nullam a nisl ut ante blandit hendrerit. Aenean sit amet nisi. Vehicula non. Ut sed ex eros. Vivamus sit amet nibh non tellus tristique interdum. In elementis mé pra quem é amistosis quis leo.
-              </p>
-            </Alert>        
-        </Row>
-      </Container>;         
-        </header>
+              {/* <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
+
+                <Tab eventKey="profile" title="Profile">
+
+                  <JSONTree data={data} theme={{
+                    extend: theme,
+                    // underline keys for literal values
+                    valueLabel: {
+                      textDecoration: 'underline'
+                    },
+                    // switch key for objects to uppercase when object is expanded.
+                    // `nestedNodeLabel` receives additional arguments `expanded` and `keyPath`
+                    nestedNodeLabel: ({ style }, nodeType, expanded) => ({
+                      style: {
+                        ...style
+                      }
+                    })
+                  }} />
+                </Tab>
+
+              </Tabs> */}
+
+            </div>
+          </div>
+
+        </div>
+
       </div>
     );
   }
